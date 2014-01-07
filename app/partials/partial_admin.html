@@ -1,0 +1,186 @@
+<div class="form-horizontal" role="form">
+
+   <br/>
+   <div class="h3 col-sm-offset-1">Server connection</div>
+   <br/>
+   <div class="form-group">
+      <label for="configURL" class="col-sm-2 control-label">Server URL:</label>
+      <div class="col-sm-9">
+         <input id="configURL" class="form-control" type="text" ng-model="configuration.baseURI" ng-change="clearConnectionMessage()"/>
+         <button id="btnTestConnection" ng-click="testConnection()" ng-disabled="btnTestConnection_disabled">Test serverconnection</button>
+         <label>{{connectionMessage}}</label>
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="Interval" class="col-sm-2 control-label">Interval in ms:</label>
+      <div class="col-sm-2">
+         <input id="Interval" class="form-control" type="text" ng-model="configuration.interval"/>
+      </div>
+   </div>
+
+   <br/>
+   <br/>
+   <div class="h3 col-sm-offset-1">Database</div>
+   <br/>
+
+   <div class="col-sm-offset-1"><h4>Telemeeapps:</h4>
+      <table class="table table-bordered table-striped">
+         <thead>
+            <tr>
+               <th>
+                  ID
+               </th>
+               <th>
+                  Name
+               </th>
+               <th>
+                  Count<br/>logentries
+               </th>
+               <th>
+               </th>
+               <th>
+                  Channels
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr ng-repeat="app in apps| orderBy:'id'">
+               <td>{{app.id}}</td>
+               <td>{{app.name}}</td>
+               <td>{{getCountsByApp(app)}}</td>
+               <td>
+                  <button id="btnDeleteApp" ng-click="deleteApp(app)">Delete app</button>
+               </td>
+               <td>
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>
+                              ID
+                           </th>
+                           <th>
+                              Channelname
+                           </th>
+                           <th>
+                              Count<br/>logentries
+                           </th>
+                           <th>
+                           </th>
+                           <th>
+                              Channelattributes
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr ng-repeat="channel in getChannelsOfApp(app)| orderBy:'id'">
+                           <td>{{channel.id}}</td>
+                           <td>{{channel.name}}</td>
+                           <td>{{getCountsByChannel(channel)}}</td>
+                           <td>
+                              <button id="btnDeleteAllLogEntries" ng-click="deleteAllLogEntries(channel)">Delete all logs</button>
+                           </td>
+                           <td>
+                              <table class="table table-bordered table-striped">
+                                 <thead>
+                                    <tr>
+                                       <th>
+                                          ID
+                                       </th>
+                                       <th>
+                                          Attributename
+                                       </th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr ng-repeat="channelAttribute in getChannelAttributesOfChannel(channel)| orderBy:'id'">
+                                       <td>{{channelAttribute.id}}</td>
+                                       <td>{{channelAttribute.name}}</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+
+   <div class="col-sm-offset-1"><h4>Channels:</h4>
+      <table class="table table-bordered table-striped">
+         <thead>
+            <tr>
+               <th>
+                  ID
+               </th>
+               <th>
+                  Channelname
+               </th>
+               <th>
+                  Count<br/>logentries
+               </th>
+               <th>
+               </th>
+               <th>
+                  Channelattributes
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr ng-repeat="channel in allChannels| orderBy:'id'">
+               <td>{{channel.id}}</td>
+               <td>{{channel.name}}</td>
+               <td>{{getCountsByChannel(channel)}}</td>
+               <td>
+                  <button id="btnDeleteAllLogEntries" ng-click="deleteAllLogEntries(channel)">Delete all logs</button>
+               </td>
+               <td>
+                  <table class="table table-bordered table-striped">
+                     <thead>
+                        <tr>
+                           <th>
+                              ID
+                           </th>
+                           <th>
+                              Attributename
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr ng-repeat="channelAttribute in getChannelAttributesOfChannel(channel)| orderBy:'id'">
+                           <td>{{channelAttribute.id}}</td>
+                           <td>{{channelAttribute.name}}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+
+   <div class="col-sm-offset-1 ">
+      <h4>ChannelAttributes:</h4>
+      <table class="table table-bordered table-striped">
+         <thead>
+            <tr>
+               <th>
+                  ID
+               </th>
+               <th>
+                  Attributename
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr ng-repeat="channelAttribute in allChannelAttributes| orderBy:'id'">
+               <td>{{channelAttribute.id}}</td>
+               <td>{{channelAttribute.name}}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+
+</div>
